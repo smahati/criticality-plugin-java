@@ -2,7 +2,7 @@ package com.sap.capire;
 
 import com.sap.cds.CdsData;
 import com.sap.cds.Result;
-import com.sap.cds.Row;
+
 import com.sap.cds.reflect.CdsAssociationType;
 import com.sap.cds.reflect.CdsElement;
 import com.sap.cds.reflect.CdsEnumType;
@@ -47,9 +47,7 @@ public class CriticalityHandler implements EventHandler {
     }
 
     private void processResultForCriticalityAnnotatedElement(CdsElement cdsElement, Result result) {
-        for (Row row : result.list()) {
-            processRow(cdsElement, row);
-        }
+        result.list().forEach(row -> processRow(cdsElement, row));
     }
 
     private void processRow(CdsElement cdsElement, CdsData row) {
