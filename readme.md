@@ -42,8 +42,8 @@ Replace the generated pom.xml with the following content. It contains the needed
   <name>criticality</name>
   <url>http://maven.apache.org</url>
   <properties>
-	  <maven.compiler.release>21</maven.compiler.release>
-	  <cds.services.version>2.9.1</cds.services.version>
+	  <maven.compiler.release>17</maven.compiler.release>
+	  <cds.services.version>2.10.0</cds.services.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -65,7 +65,7 @@ Replace the generated pom.xml with the following content. It contains the needed
     <dependency>
       <groupId>com.sap.cds</groupId>
       <artifactId>cds-services-api</artifactId>
-      <version>2.9.1</version>
+      <version>2.10.0</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -91,7 +91,9 @@ Write the handler. Use the following resources as a reference:
 * https://cap.cloud.sap/docs/java/cds-data
 
 ## Install the handler to the local Maven repo
-In order to consume the new plugin from e.g. the Incidents App you need to install it to the local Maven repo.
+In order to consume the new plugin from e.g. the Incidents App you need to install it to the local Maven repo. The `source:jar`
+goal adds the source code to the jar as well. You might need it for debugging. 😈
+
 ```
 mvn source:jar install
 ```
