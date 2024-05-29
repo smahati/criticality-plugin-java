@@ -5,7 +5,6 @@ import com.sap.cds.Result;
 import com.sap.cds.Row;
 import com.sap.cds.reflect.CdsAssociationType;
 import com.sap.cds.reflect.CdsElement;
-import com.sap.cds.reflect.CdsEntity;
 import com.sap.cds.reflect.CdsEnumType;
 import com.sap.cds.reflect.CdsType;
 import com.sap.cds.services.cds.ApplicationService;
@@ -18,7 +17,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 
 @ServiceName(value = "*", type = ApplicationService.class)
@@ -56,15 +54,15 @@ public class CriticalityHandler implements EventHandler {
 
     private void processRow(CdsElement cdsElement, CdsData row) {
         if (cdsElement.getType().isEnum()) {
-            handleEnumElement(cdsElement, row);
+            processEnumElement(cdsElement, row);
         } else if (cdsElement.getType().isAssociation() && row.containsKey(cdsElement.getName())) {
-            handleExpandedEnumAssociation(cdsElement, row);
+            processExpandedEnumAssociation(cdsElement, row);
         }
 
     }
 
     @SuppressWarnings("unchecked")
-    private void handleExpandedEnumAssociation(CdsElement cdsElement, CdsData row) {
+    private void processExpandedEnumAssociation(CdsElement cdsElement, CdsData row) {
         ((CdsAssociationType) cdsElement.getType()).getTarget().elements().filter(innerCdsElement -> innerCdsElement.getType().isEnum()).findFirst().ifPresent(innerCdsElement -> {
             if (isToManyAssoc(cdsElement)) {
                 ((List<CdsData>) row.get(cdsElement.getName())).forEach(innerRow -> processRow(innerCdsElement, innerRow));
@@ -75,7 +73,7 @@ public class CriticalityHandler implements EventHandler {
         });
     }
 
-    private void handleEnumElement(CdsElement cdsElement, CdsData row) {
+    private void processEnumElement(CdsElement cdsElement, CdsData row) {
         if (row.containsKey(cdsElement.getName())) {
             Map<String, Integer> criticalityValues = getCriticalityValues(cdsElement.getType());
             if (!criticalityValues.isEmpty()) {
