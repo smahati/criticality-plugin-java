@@ -87,8 +87,10 @@ Use Spring Boot autoconfiguration to register the handler automatically as soon 
 
 Write the handler. Use the following resources as a reference:
 
-* https://cap.cloud.sap/docs/java/reflection-api
-* https://cap.cloud.sap/docs/java/cds-data
+* https://cap.cloud.sap/docs/java/reflection-api You use the reflection API to introspect the application's CDS model in
+  order to find relevant entities and elements.
+* https://cap.cloud.sap/docs/java/cds-data In the handler, you need to traverse the data in the result and act according
+  to the information you discovered in the CDS model.
 
 ## Install the handler to the local Maven repo
 In order to consume the new plugin from e.g. the Incidents App you need to install it to the local Maven repo. The `source:jar`
